@@ -1,0 +1,8 @@
+//<МИКСИНЫ>==========================================================================
+@mixin anim($time,$delay) {-webkit-transition: all $time ease $delay;-moz-transition: all $time ease $delay;-ms-transition: all $time ease $delay;-o-transition: all $time ease $delay;transition: all $time ease $delay;}
+@mixin cnt($h) {display: flex;flex-direction: column; height: $h; text-align: center; align-items: stretch; justify-content: center;}
+@mixin tr($x,$y,$z) {transform: translate3d($x,$y,$z);}
+@mixin flexbox() {display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex;font-size:0;}
+@mixin flexboxinline() {display:-moz-inline-flex; display:-ms-inline-flex;  display:-o-inline-flex; display:-inline-flex;display: -webkit-inline-flex;}
+@mixin flexorder($val) {-webkit-box-ordinal-group: $val; -moz-box-ordinal-group: $val; -ms-flex-order: $val; -webkit-order: $val; order: $val;}
+//</МИКСИНЫ>==========================================================================

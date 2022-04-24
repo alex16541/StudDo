@@ -1,0 +1,11 @@
+<swiper
+    [config]="config"
+>
+    <ng-template swiperSlide *ngFor="let link of links; let index = index">
+        <div class="sidebar__item">
+            <a [href]="link.url" class="link">{{link.text}}</a>
+        </div>
+    </ng-template>
+
+</swiper>
+

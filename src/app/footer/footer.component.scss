@@ -1,0 +1,24 @@
+@use '../../scss/settings/vars' as *;
+
+.footer {
+    display: none;
+
+
+    @media (min-width: #{$md3}px) {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        height: 100%;
+
+        color: #555;
+        background-color: #333;
+
+        &__copy {
+            // color: red;
+        }
+        &__text {
+        }
+    }
+}
+

@@ -1,0 +1,10 @@
+@use '../../scss/settings/colorStyle' as *;
+
+.resizebar{
+  height: 100%;
+  width: 5px;
+
+  background-color: $risizebarColor;
+
+  cursor: col-resize;
+}
