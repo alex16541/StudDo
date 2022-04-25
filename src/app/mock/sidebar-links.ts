@@ -1,0 +1,17 @@
+export const SIDEBAR_LINKS = [
+    {text: 'Расписание', url: '/timetable'},
+    {text: 'Календарь', url: '/calendar'},
+    {text: 'Комнаты', url: '/rooms'},
+    {text: '-------', url: ''},
+    {text: 'Комната1', url: '/room/11'},
+    {text: 'Комната2', url: '/room/12'},
+    {text: 'Комната3', url: '/room/13'},
+    {text: '-------', url: ''},
+    {text: 'Чат1', url: ''},
+    {text: 'Чат2', url: ''},
+    {text: 'Чат3', url: ''},
+    {text: 'Чат4', url: ''},
+    {text: '-------', url: ''},
+    {text: 'Настройки', url: ''},
+    {text: 'Выход', url: ''},
+];

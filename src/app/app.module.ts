@@ -1,14 +1,22 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {ResizebarComponent} from './resizebar/resizebar.component';
-import {NavbarComponent} from './navbar/navbar.component';
-import {SidebarComponent} from './sidebar/sidebar.component';
-import {TimetableComponent} from './timetable/timetable.component';
-import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
+import {ResizebarComponent} from './layouts/resizebar/resizebar.component';
+import {NavbarComponent} from './layouts/navbar/navbar.component';
+import {SidebarComponent} from './layouts/sidebar/sidebar.component';
+import {TimetableComponent} from './pages/timetable/timetable.component';
+import {HeaderComponent} from './layouts/header/header.component';
+import {FooterComponent} from './layouts/footer/footer.component';
 import {SwiperModule} from "swiper/angular";
-import { ItemComponent } from './timetable/item/item.component';
+import { ItemComponent } from './pages/timetable/item/item.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CalendarComponent } from './pages/calendar/calendar.component';
+import { RoomsComponent } from './pages/rooms/rooms.component';
+import { RoomComponent } from './pages/room/room.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @NgModule({
     declarations: [
@@ -19,11 +27,20 @@ import { ItemComponent } from './timetable/item/item.component';
         TimetableComponent,
         HeaderComponent,
         FooterComponent,
-        ItemComponent
+        ItemComponent,
+        CalendarComponent,
+        RoomsComponent,
+        RoomComponent,
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
         SwiperModule,
+        AppRoutingModule,
+        HttpClientModule,
+        HttpClientInMemoryWebApiModule.forRoot(
+            InMemoryDataService, { dataEncapsulation: false }
+        )
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,0 +1,14 @@
+<div class="rooms__wrapper"
+    *ngIf="rooms; else loading">
+    <swiper [config]="config">
+        <ng-template swiperSlide *ngFor="let room of rooms; let index = index">
+            <div class="rooms__item card" (click)="enterTheRoom(room.id)" >
+                <div class="rooms__title">{{room.name}}</div>
+                <div class="rooms__description">{{room.description}}</div>
+            </div>
+        </ng-template>
+    </swiper>
+</div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

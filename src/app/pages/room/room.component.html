@@ -1,0 +1,7 @@
+<div *ngIf="room; else loading" class="card" style="margin: 0 auto">
+    <h3>{{room.name}}</h3>
+    <p>{{room.description}}</p>
+</div>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

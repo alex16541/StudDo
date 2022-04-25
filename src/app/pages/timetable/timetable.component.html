@@ -2,7 +2,7 @@
     [config]="config"
 >
     <ng-template swiperSlide *ngFor="let day of days; let index = index">
-        <div class="timetable__item">
+        <div class="timetable__item card">
             <h2 class="timetable__title">{{day.day}}</h2>
             <div class="timetable__item-list">
                 <app-item *ngFor="let item of day.items; let i = index">

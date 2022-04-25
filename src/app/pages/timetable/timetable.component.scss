@@ -1,4 +1,4 @@
-@use '../../scss/settings/colorStyle' as *;
+@use '../../../scss/settings/colorStyle' as *;
 
 :host{
     min-width: 0;
@@ -22,9 +22,6 @@
 
             &__item {
                 height: calc(100% - 20px);
-                padding: 20px;
-                background-color: $backgroundColor;
-                border-radius: 10px;
             }
             &__title {
                 padding: 0 15px 10px 15px;

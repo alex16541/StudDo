@@ -15,4 +15,7 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    settingsClick(){
+        console.log('Вызов окна фильтра')
+    }
 }
