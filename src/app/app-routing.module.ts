@@ -4,14 +4,17 @@ import {TimetableComponent} from "./pages/timetable/timetable.component";
 import {CalendarComponent} from "./pages/calendar/calendar.component";
 import {RoomsComponent} from "./pages/rooms/rooms.component";
 import {RoomComponent} from "./pages/room/room.component";
+import {LoginComponent} from "./pages/login/login.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/timetable', pathMatch: 'full'},
+    { path: 'login', component: LoginComponent },
     { path: 'timetable', component: TimetableComponent },
     { path: 'calendar', component: CalendarComponent },
     { path: 'rooms', component: RoomsComponent },
     { path: 'room/:id', component: RoomComponent },
     { path: 'room', redirectTo: '/rooms', pathMatch: 'full'},
+    { path: '**', redirectTo: '' }
 ]
 
 @NgModule({

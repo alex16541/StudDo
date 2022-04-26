@@ -7,14 +7,22 @@ import { Room } from './features/room';
 })
 export class InMemoryDataService implements InMemoryDbService {
     createDb() {
-        const rooms = [
-            {id: 11, name: "Комната 3802", description: "Купить картофан"},
-            {id: 12, name: "Диплом", description: "Купить марковь"},
-            {id: 13, name: "Проект по матеше", description: "Купить сыыыыр"},
-            {id: 14, name: "Комната F", description: "Just F"},
-            {id: 15, name: "Так далее и тому подобное", description: "Купить чё-то"},
-        ]
-        return {rooms};
+        return {
+            rooms: [
+                {id: 11, name: "Комната 3802", description: "Купить картофан"},
+                {id: 12, name: "Диплом", description: "Купить марковь"},
+                {id: 13, name: "Проект по матеше", description: "Купить сыыыыр"},
+                {id: 14, name: "Комната F", description: "Just F"},
+                {id: 15, name: "Так далее и тому подобное", description: "Купить чё-то"},
+            ],
+            users: [
+                {id: 11, name: 'Алексей', pass:'123'},
+                {id: 12, name: 'Иван', pass:'123'},
+                {id: 13, name: 'Виталя', pass:'123'},
+                {id: 14, name: 'Жаба', pass:'123'},
+                {id: 15, name: 'Саня', pass:'228'},
+            ],
+        };
     }
 
     // Overrides the genId method to ensure that a hero always has an id.

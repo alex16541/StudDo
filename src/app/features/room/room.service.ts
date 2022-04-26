@@ -52,7 +52,7 @@ export class RoomService {
         );
     }
 
-    /* GET rooms whose name contains search term */
+    /** GET rooms whose name contains search term */
     searchRooms(term: string): Observable<Room[]> {
         if (!term.trim()) {
             // if not search term, return empty room array.
@@ -69,10 +69,10 @@ export class RoomService {
     //////// Save methods //////////
 
     /** POST: add a new room to the server */
-    addHero(room: Room): Observable<Room> {
+    addRoom(room: Room): Observable<Room> {
         return this.http.post<Room>(this.roomsUrl, room, this.httpOptions).pipe(
-            tap((newHero: Room) => RoomService.log(`added hero w/ id=${newHero.id}`)),
-            catchError(this.handleError<Room>('addHero'))
+            tap((newRoom: Room) => RoomService.log(`added room w/ id=${newRoom.id}`)),
+            catchError(this.handleError<Room>('addRoom'))
         );
     }
 
@@ -82,7 +82,7 @@ export class RoomService {
 
         return this.http.delete<Room>(url, this.httpOptions).pipe(
             tap(_ => RoomService.log(`deleted room id=${id}`)),
-            catchError(this.handleError<Room>('deleteHero'))
+            catchError(this.handleError<Room>('deleteRoom'))
         );
     }
 
@@ -115,9 +115,9 @@ export class RoomService {
         };
     }
 
-    /** Log a RoomService message with the MessageService */
+    /** Log a RoomService message with the Log */
     private static log(message: string) {
-        console.log(`RoomService: ${message}`);;
+        console.log(`RoomService: ${message}`);
     }
 
     // private log(message: string) {

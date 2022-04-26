@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { LoadingComponent } from './shared/loading/loading.component';
         CalendarComponent,
         RoomsComponent,
         RoomComponent,
-        LoadingComponent
+        LoadingComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,5 @@
-export interface Hero {
+export interface User {
     id: number;
     name: string;
+    email: string | undefined;
 }
