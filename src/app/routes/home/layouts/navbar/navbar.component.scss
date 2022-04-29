@@ -1,0 +1,16 @@
+@use '../../../../../scss/shared/colorStyle' as *;
+
+.navbar {
+    width: 100%;
+    height: 50px;
+    background-color: $backgroundColor;
+
+    &__list {
+        padding: 0 20px;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+    }
+}

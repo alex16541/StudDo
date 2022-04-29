@@ -1,50 +1,46 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {ResizebarComponent} from './layouts/resizebar/resizebar.component';
-import {NavbarComponent} from './layouts/navbar/navbar.component';
-import {SidebarComponent} from './layouts/sidebar/sidebar.component';
-import {TimetableComponent} from './pages/timetable/timetable.component';
-import {HeaderComponent} from './layouts/header/header.component';
-import {FooterComponent} from './layouts/footer/footer.component';
-import {SwiperModule} from "swiper/angular";
-import { ItemComponent } from './pages/timetable/item/item.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CalendarComponent } from './pages/calendar/calendar.component';
-import { RoomsComponent } from './pages/rooms/rooms.component';
-import { RoomComponent } from './pages/room/room.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { LoadingComponent } from './shared/loading/loading.component';
-import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './routes/home/home.component';
+import {AccountComponent} from "./routes/account/account.component";
+import {HomeModule} from "./routes/home/home.module";
+import {ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from './helpers';
+import {AccountModule} from "./routes/account/account.module";
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
     declarations: [
         AppComponent,
-        ResizebarComponent,
-        NavbarComponent,
-        SidebarComponent,
-        TimetableComponent,
-        HeaderComponent,
-        FooterComponent,
-        ItemComponent,
-        CalendarComponent,
-        RoomsComponent,
-        RoomComponent,
-        LoadingComponent,
-        LoginComponent
+        AccountComponent,
+        HomeComponent,
+
     ],
     imports: [
         BrowserModule,
-        SwiperModule,
         AppRoutingModule,
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(
-            InMemoryDataService, { dataEncapsulation: false }
-        )
+            InMemoryDataService, {dataEncapsulation: false}
+        ),
+        HomeModule,
+        AccountModule,
+        SharedModule
+
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
+        // provider used to create fake backend
+        fakeBackendProvider
+    ],
+    exports: [
+
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

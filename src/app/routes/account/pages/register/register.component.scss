@@ -1,0 +1,45 @@
+@use '~src/scss/shared' as *;
+
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .reg{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap: 10px;
+        min-width: 260px;
+        &__footer{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row-reverse;
+            align-items: center;
+            gap: 20px;
+        }
+        &__logo{
+            max-height: 100px;
+            max-width: 100px;
+            align-self: center;
+        }
+        &__input{
+
+        }
+        &__input-title{
+            padding: 0 10px;
+        }
+        &__link{
+            color: $infoColor;
+            margin-left: 10px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        &__submit{
+
+        }
+    }
+}

@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Session } from './session.interface';
 import {User, UserService} from "../user";
 import {Router} from "@angular/router";
+import { environment } from 'src/environments/environment';
 
 
 
@@ -30,15 +31,15 @@ export class SessionService {
     }
 
     public login(name: string, pass: string): Observable<Session>{
-        return this.http.post<Session>(`${this.apiUrl}/login`, {name, pass})
+        return this.http.post<Session>(`${environment.apiUrl}/account/login`, {name, pass})
             .pipe(
                 map(session => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('session', JSON.stringify(session));
                     this.sessionSubject.next(session);
                     return session;
-                }),
-                catchError(this.handleError<any>('login'))
+                })
+                // ,catchError(this.handleError<any>('login'))
             );
     }
 
@@ -47,7 +48,11 @@ export class SessionService {
         localStorage.removeItem('session');
         //@ts-ignore
         this.sessionSubject.next(null);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/account/login']);
+    }
+
+    register(user: User) {
+        return this.http.post(`${environment.apiUrl}/account/register`, user);
     }
 
     /**

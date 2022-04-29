@@ -1,28 +1,19 @@
-//<ШРИФТЫ>=================================================================================
-@use "~src/assets/fonts/Gilroy/stylesheet.scss";
-//<ПОДКЛЮЧАЕМЫЕ ШРИФТЫ>====================================================================
-//<ОБНУЛЕНИЕ СТИЛЕЙ>=======================================================================
-@use "scss/settings/nullableStyle";
-//</ОБНУЛЕНИЕ СТИЛЕЙ>======================================================================
+@use "~src/assets/fonts/Gilroy/stylesheet.scss" as *;
+@use "scss/settings" as *;
+@use "scss/shared" as *;
+@use "scss/forms" as *;
 
-//<COLORS>=================================================================================
-@use 'scss/settings/colorStyle' as *;
-//</COLORS>================================================================================
-
-//<Шрифт по умолчанию>=====================================================================
-$fontFamily:"Gilroy";
-$fontcolor:#fff;
-//</Шрифт по умолчанию>====================================================================
-
-//<СТИЛИ ДОКУМЕНТА>========================================================================
-
-body,html{margin: 0;padding: 0;font-family: $fontFamily;font-size: 16px; color: $fontcolor;background-color: #333; height: 100%}
-
-//</СТИЛИ ДОКУМЕНТА>=======================================================================
-
-//<ПОДКЛЮЧАЕМЫЕ СТИЛИ>=====================================================================
-@import 'scss/settings/swiperStyle';
-//</ПОДКЛЮЧАЕМЫЕ СТИЛИ>====================================================================
+body,html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: $fontFamily;
+    font-size: 16px;
+    color: $fontColor;
+    background-color: $backgroundColor;
+    //background-image: url("assets/img/logo-w-lg.png");
+    //background-size: 50px;
+}
 
 .card{
     padding: 20px;
@@ -31,3 +22,5 @@ body,html{margin: 0;padding: 0;font-family: $fontFamily;font-size: 16px; color: 
     border: 2px solid $borderColor;
     box-shadow: 1px 1px 5px #000000;
 }
+
+

@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {TimetableComponent} from "./pages/timetable/timetable.component";
-import {CalendarComponent} from "./pages/calendar/calendar.component";
-import {RoomsComponent} from "./pages/rooms/rooms.component";
-import {RoomComponent} from "./pages/room/room.component";
-import {LoginComponent} from "./pages/login/login.component";
+import {AuthGuard} from "./helpers";
+
+const homeModule = () => import('./routes/home/home.module').then(x => x.HomeModule);
+const accountModule = () => import('./routes/account/account.module').then(x => x.AccountModule);
 
 const routes: Routes = [
-    { path: '', redirectTo: '/timetable', pathMatch: 'full'},
-    { path: 'login', component: LoginComponent },
-    { path: 'timetable', component: TimetableComponent },
-    { path: 'calendar', component: CalendarComponent },
-    { path: 'rooms', component: RoomsComponent },
-    { path: 'room/:id', component: RoomComponent },
-    { path: 'room', redirectTo: '/rooms', pathMatch: 'full'},
+    { path: '', redirectTo:'/home', pathMatch:'full' },
+    { path: 'home', loadChildren: homeModule, canActivate: [AuthGuard] },
+    { path: 'account', loadChildren: accountModule },
     { path: '**', redirectTo: '' }
 ]
 

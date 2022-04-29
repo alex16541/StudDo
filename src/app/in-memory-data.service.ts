@@ -16,7 +16,7 @@ export class InMemoryDataService implements InMemoryDbService {
                 {id: 15, name: "Так далее и тому подобное", description: "Купить чё-то"},
             ],
             users: [
-                {id: 11, name: 'Алексей', pass:'123'},
+                {id: 11, name: 'Alex', pass:'123'},
                 {id: 12, name: 'Иван', pass:'123'},
                 {id: 13, name: 'Виталя', pass:'123'},
                 {id: 14, name: 'Жаба', pass:'123'},

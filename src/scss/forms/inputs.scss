@@ -1,0 +1,29 @@
+@use '~src/scss/shared' as *;
+.input-text{
+    background-color: $contentColor;
+    border: 2px solid $contentColor;
+    border-radius: 7px;
+    min-height: 1.5rem;
+    padding: 0.5rem;
+    width: 100%;
+    color: $fontColor;
+
+    &_is-invalid{
+        border: 2px solid $dangerColor;
+    }
+}
+
+.input-button{
+    width: 100%;
+    padding: 0.5rem;
+    color: $fontColor;
+
+    background-color: $contentColor;
+    border: 2px solid $contentColor;
+    border-radius: 7px;
+
+    &:focus{
+        border: 2px solid $infoColor;
+    }
+
+}

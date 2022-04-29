@@ -1,0 +1,6 @@
+@use '~src/scss/shared' as *;
+.account-page{
+    width: 100vw;
+    height: 100vh;
+    background-color: $contentColor;
+}

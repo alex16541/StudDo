@@ -1,0 +1,8 @@
+@use '../shared/colorStyle' as *;
+
+.swiper-scrollbar{
+
+    &-drag{
+        background-color: $scrollbarColor;
+    }
+}

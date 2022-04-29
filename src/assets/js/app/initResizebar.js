@@ -30,8 +30,10 @@ function ResizebarInit (){
     });
 
     r.addEventListener('mousedown', (e) => {
-        curr_width = sid.offsetWidth;
-        unlock = true;
+        if(!sid.classList.contains('isOpen')){
+            curr_width = sid.offsetWidth;
+            unlock = true;
+        }
     });
     document.addEventListener('mouseup', (e) => {
         curr_width = sid.offsetWidth;

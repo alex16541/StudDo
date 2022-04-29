@@ -1,0 +1,31 @@
+<app-loading *ngIf="loading; else regForm"></app-loading>
+<ng-template #regForm>
+    <app-modal>
+        <form  class="reg" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <img class="reg__logo" src="/assets/img/logo-w-lg.png" alt="Logo">
+
+            <h3 class="reg__input-title">Username:</h3>
+            <input class="reg__input input-text" type='text' formControlName="name"
+                   [ngClass]="{ 'input-text_is-invalid': submitted && f['name'].errors }" >
+
+            <h3 class="reg__input-title">Email:</h3>
+            <input class="reg__input input-text" type='email' formControlName="email" email
+                   [ngClass]="{ 'input-text_is-invalid': submitted && f['email'].errors }" >
+
+            <h3 class="reg__input-title">Password:</h3>
+            <input class="reg__input input-text" type="password" formControlName="pass"
+                   [ngClass]="{ 'input-text_is-invalid': submitted && f['pass'].errors }" >
+
+            <h3 class="reg__input-title">Repeat password:</h3>
+            <input class="reg__input input-text" type="password" formControlName="repeatPass"
+                   [ngClass]="{ 'input-text_is-invalid': submitted && f['repeatPass'].errors }" >
+
+            <div class="reg__footer">
+                <input class="reg__submit input-button" type="submit" value="Register">
+                <a class="reg__link" routerLink="/account/login">Уже есть аккаунт</a>
+            </div>
+
+        </form>
+    </app-modal>
+</ng-template>
+
