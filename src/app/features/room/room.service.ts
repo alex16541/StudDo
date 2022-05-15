@@ -115,7 +115,7 @@ export class RoomService {
         };
     }
 
-    /** Log a RoomService message with the Log */
+    /** Log a CalendarService message with the Log */
     private static log(message: string) {
         console.log(`RoomService: ${message}`);
     }

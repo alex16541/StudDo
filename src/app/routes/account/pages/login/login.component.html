@@ -1,7 +1,7 @@
 <app-loading *ngIf="loading; else loginForm"></app-loading>
 <ng-template #loginForm>
-    <app-modal>
-        <form  class="login" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="wrapper">
+        <form  class="login card" [formGroup]="form" (ngSubmit)="onSubmit()">
             <img class="login__logo" src="/assets/img/logo-w-lg.png" alt="Logo">
 
             <h3 class="login__input-title">Login:</h3>
@@ -19,6 +19,6 @@
 
             <input class="input-button" type="button" value="Забыл пароль" (click)="forgotPassword()">
         </form>
-    </app-modal>
+    </div>
 </ng-template>
 

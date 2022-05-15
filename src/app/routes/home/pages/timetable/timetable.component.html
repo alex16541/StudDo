@@ -1,17 +1,16 @@
 <swiper
+    class="swiper-custom-drag"
     [config]="config"
 >
     <ng-template swiperSlide *ngFor="let day of days; let index = index">
         <div class="timetable__card card">
 
-            <h2 class="timetable__title">{{day.day}}</h2>
+            <div class="timetable__title">{{day.day}}</div>
 
             <swiper [config]="day_config" class="timetable__item-list">
                 <ng-template swiperSlide *ngFor="let item of day.items; let i = index">
                     <div class="timetable__item">
-                        <app-item>
-                            {{i+1}}. {{item}}
-                        </app-item>
+                        {{i+1}}. {{item}}
                     </div>
                 </ng-template>
             </swiper>

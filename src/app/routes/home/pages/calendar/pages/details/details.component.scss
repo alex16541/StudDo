@@ -1,0 +1,69 @@
+@use '../../../../../../../scss/shared/index' as *;
+
+.details{
+    max-width: 800px;
+    margin: 0 auto;
+    &__header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__title{
+        padding: 0 0 0 5px;
+    }
+    &__cross{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .btn_icon{
+            padding: 5px;
+        }
+    }
+    &__body{
+        height: calc(100vh - 200px);
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        @media (max-width: #{$md3}px) {
+            height: calc(100vh - 230px);
+        }
+
+    }
+    &__list{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 30px;
+        padding: 5px;
+    }
+    &__items-group{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    &__calendar-name{
+        font-size: 1.2rem;
+    }
+    &__item{
+        padding: 10px;
+        gap: 50px;
+        cursor:pointer;
+    }
+    &__banner{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 10px;
+        padding: 30px;
+        .input-button{
+            font-size: 1.8rem;
+        }
+    }
+    &__banner-text{
+        font-size: 2rem;
+        text-align: center;
+    }
+}

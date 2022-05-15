@@ -1,0 +1,60 @@
+<app-page-template
+    [title]="'Календари'"
+    [bannerText]="'Календарей пока нет.'"
+    [isBannerVisible]="calendarsCount == 0"
+    *ngIf="!isLoading; else loading"
+>
+    <div class="filter__list">
+        <div *ngFor="let calendar of calendars">
+
+            <app-list-item class="filter__item card">
+                <mat-checkbox class="example-margin"
+                              [color]="'primary'"
+                              [(ngModel)]="calendar.mainCalendarVisible"
+                              (ngModelChange)="updateAllComplete()"
+                              >
+                    {{calendar.name}}
+                </mat-checkbox>
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editCalendar(calendar)">
+                        <mat-icon>edit_calendar</mat-icon>
+                        <span>Редактировать</span>
+                    </button>
+                    <button mat-menu-item (click)="editCalendar(calendar)">
+                        <mat-icon>share</mat-icon>
+                        <span>Поделиться</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteCalendar(calendar)">
+                        <mat-icon [color]="'warn'">delete</mat-icon>
+                        <span>Удалить</span>
+                    </button>
+                </mat-menu>
+            </app-list-item>
+        </div>
+    </div>
+
+    <button bannerContent class="input-button input-button_dark"
+            (click)="createCalendar()"
+            mat-raised-button
+    >Создать календарь</button>
+
+    <mat-checkbox *ngIf="calendars" footerContent class="input-button input-button_dark"
+                  [checked]="allChecked"
+                  [color]="'warn'"
+                  [indeterminate]="someComplete()"
+                  (change)="setAll($event.checked)"
+
+    >Отметить все</mat-checkbox>
+
+    <button footerContent class="input-button input-button_dark"
+            (click)="createCalendar()"
+            mat-raised-button
+    >Создать календарь</button>
+
+</app-page-template>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

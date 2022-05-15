@@ -31,14 +31,19 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
                             "src/styles.scss",
+                            "src/scss/settings/matConfig.scss",
                             "node_modules/swiper/swiper.scss",
                             "node_modules/swiper/modules/navigation/navigation.scss",
                             "node_modules/swiper/modules/pagination/pagination.scss",
-                            "node_modules/swiper/modules/scrollbar/scrollbar.scss"
+                            "node_modules/swiper/modules/scrollbar/scrollbar.scss",
+                            "node_modules/swiper/modules/free-mode/free-mode.scss"
+
                         ],
                         "scripts": [
-                            "src/assets/js/app/initResizebar.js"
+                            "src/assets/js/app/initResizebar.js",
+                            "./node_modules/hammerjs/hammer.min.js"
                         ]
                     },
                     "configurations": {
@@ -46,8 +51,8 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "1mb",
+                                    "maximumError": "1.5mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
@@ -105,9 +110,10 @@
                             "src/assets"
                         ],
                         "styles": [
+                            "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
                             "src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [ "./node_modules/hammerjs/hammer.min.js"]
                     }
                 }
             }

@@ -1,0 +1,43 @@
+<app-page-template
+    *ngIf="!isLoading; else loading"
+    [title]="title"
+    [bannerText]="'Событий пока нет'"
+    [isBannerVisible]="calendars.length == 0"
+    [isInvalidData]="title == 'Invalid date' || title == ''"
+    [bannerTextInvalidData]="'Не верная дата'"
+>
+    <div class="details__list">
+        <div class="details__items-group"
+             *ngFor="let calendar of calendars">
+
+            <div class="details__calendar-name"
+                 [ngStyle]="{'color':calendar.color}">
+                {{calendar.name}}
+            </div>
+
+            <app-list-item class="details__item card" *ngFor="let event of calendar.events">
+                <div class="details__text">{{event.title}}</div>
+                <div class="details__time">{{event | datePeriod : date}}</div>
+            </app-list-item>
+
+        </div>
+    </div>
+
+    <button bannerContent class="input-button input-button_dark"
+            (click)="createEvent()"
+            mat-raised-button
+    >Создать событие</button>
+
+    <button footerContent class="input-button input-button_dark"
+            (click)="createEvent()"
+            mat-raised-button
+    >Создать событие</button>
+
+    <button invalidDataBannerContent class="input-button input-button_dark"
+            (click)="back()"
+            mat-raised-button
+    >Назад</button>
+</app-page-template>
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

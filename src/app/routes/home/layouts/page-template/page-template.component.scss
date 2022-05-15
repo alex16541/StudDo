@@ -1,0 +1,72 @@
+@use '~src/scss/shared' as *;
+
+swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 5px 5px 0;
+}
+.page{
+    max-width: 800px;
+    margin: 0 auto;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template: auto 1fr auto / 1fr;
+    &__header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__title{
+        padding: 0 0 0 5px;
+    }
+    &__cross{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .btn_icon{
+            padding: 5px;
+        }
+    }
+    &__body{
+        height: 100%;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    &__calendar-name{
+        font-size: 1.2rem;
+    }
+    &__item{
+        padding: 10px;
+        cursor:pointer;
+    }
+    &__content{
+        width: calc(100% - 15px);
+    }
+    &__banner{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 10px;
+        padding: 30px;
+        .input-button{
+            font-size: 1.8rem;
+        }
+    }
+    &__banner-text{
+        font-size: 2rem;
+        text-align: center;
+    }
+    &__footer{
+
+    }
+    &__buttons{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+}

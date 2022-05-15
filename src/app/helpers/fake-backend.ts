@@ -3,11 +3,9 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-// array in local storage for registered users
-
-// let users = JSON.parse(JSON.stringify([{id:11,name: 'alex', pass: '123'}]));
-let users = JSON.parse(localStorage.getItem('users') || JSON.stringify([{id:11,name: 'alex', pass: '123'}])) ;
-// let users = JSON.parse(JSON.stringify(localStorage.getItem('users'))) || [] ;
+// let users = JSON.parse(localStorage.getItem('users') || JSON.stringify([{id:11,name: 'alex', pass: '123'}])) ;
+//@ts-ignore
+let users = JSON.parse(localStorage.getItem('users')) || [] ;
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {

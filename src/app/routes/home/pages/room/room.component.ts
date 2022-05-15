@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, NavigationEnd,RouterEvent} from "@angular/router";
-import {ROOMS} from "../../../../mock";
+import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
 import {Room, RoomService} from "../../../../features/room";
 import {filter, Observable} from "rxjs";
 

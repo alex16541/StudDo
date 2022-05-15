@@ -21,9 +21,27 @@
     background-color: $contentColor;
     border: 2px solid $contentColor;
     border-radius: 7px;
-
+    &_dark{
+        background-color: $backgroundColor;
+    }
     &:focus{
         border: 2px solid $infoColor;
     }
 
 }
+
+
+
+//.input-combo{
+//    border-radius: 10px;
+//    height: 40px;
+//    overflow: hidden;
+//    & .igx-input-group{
+//        &__bundle-main{
+//        }
+//    }
+//}
+//.igx-input-group--box .igx-input-group__bundle-main{
+//    padding: 0;
+//
+//}

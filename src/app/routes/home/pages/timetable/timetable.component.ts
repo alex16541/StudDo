@@ -77,7 +77,6 @@ export class TimetableComponent implements OnInit {
         slidesPerView: "auto",
         autoHeight:true,
         spaceBetween: 20,
-        // mousewheel: true,
         scrollbar: true,
         freeMode: true,
     };

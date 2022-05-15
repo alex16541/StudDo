@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="form">
+        <label for="calendarName">Название:
+            <mat-error *ngIf="f['name'].hasError('required')">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+            <mat-error
+                *ngIf="f['name'].hasError('minlength')
+                && !f['name'].hasError('required')"
+            >
+               минимальная длинна - <strong>2 символа</strong>
+            </mat-error>
+        </label>
+        <input matInput
+               id="calendarName"
+               formControlName="name"
+               class="input-text"
+               type="text"
+               autocomplete="off"
+               minlength="2"
+               maxlength="40"
+        >
+
+
+        <label for="calendarDescription">Описание:</label>
+        <textarea matInput
+                  id="calendarDescription"
+                  class="input-text description"
+                  formControlName="description"
+        >
+
+        </textarea>
+
+        <label for="calendarColor">Цвет:</label>
+        <input matInput
+               id="calendarColor"
+               class="input-text color"
+               formControlName="color"
+               type="color"
+        >
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial mat-dialog-close>Отмена</button>
+    <button mat-button [disabled]="form.invalid || !form.touched" (click)="onSubmit()">{{data?.calendar ? 'Сохранить' : 'Создать'}}</button>
+</mat-dialog-actions>
+

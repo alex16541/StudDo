@@ -20,7 +20,8 @@ export class SessionService {
         private http: HttpClient,
         private router: Router
     ) {
-        this.sessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage['session']));
+        //@ts-ignore
+        this.sessionSubject = new BehaviorSubject<Session>(JSON.parse(localStorage.getItem('session')));
         this.session = this.sessionSubject.asObservable();
     }
 

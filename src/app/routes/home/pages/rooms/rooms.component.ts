@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ROOMS} from "../../../../mock";
 import SwiperCore, {Scrollbar, Mousewheel, FreeMode,  SwiperOptions} from "swiper";
 import {Router} from "@angular/router";
 import {Room, RoomService} from "../../../../features/room";

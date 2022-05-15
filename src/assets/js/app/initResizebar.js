@@ -8,6 +8,7 @@ function ResizebarInit (){
 
     document.addEventListener('mousemove', (e) => {
         let change = curr_width + (e.clientX - curr_width);
+
         if (unlock) {
             if (change > 99) {
 
@@ -44,7 +45,14 @@ function ResizebarInit (){
         if (unlock) {
             e.preventDefault();
         }
+
     });
+    document.addEventListener('resize', (e)=>{
+        if(window.innerWidth<768)
+        {
+            sid.style.width = '0';
+        }
+    })
 
 
 }

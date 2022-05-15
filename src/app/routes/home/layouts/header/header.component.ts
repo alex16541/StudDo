@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from "../../../../features/session";
 import {SidebarService} from "../sidebar/sidebar.service";
-import {AlertService} from "../../../../shared/alert/alert.service";
+import * as moment from "moment";
 
 @Component({
     selector: 'app-header',
@@ -9,12 +9,13 @@ import {AlertService} from "../../../../shared/alert/alert.service";
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-    public date: Date;
+    public date: moment.Moment;
     constructor(
         public sessionService: SessionService,
         private sidebarService: SidebarService
     ) {
-        this.date = new Date();
+        moment.locale('ru');
+        this.date = moment();
     }
 
     ngOnInit(): void {
