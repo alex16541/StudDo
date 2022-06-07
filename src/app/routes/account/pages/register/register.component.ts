@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {EmailValidator, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SessionService} from "../../../../features/session";
 import {AlertService} from "../../../../shared/alert/alert.service";
-import {first} from "rxjs";
-import {User} from "../../../../features/user";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -27,9 +26,9 @@ export class RegisterComponent implements OnInit {
     {
 
         this.form = this.formBuilder.group({
-            name: ['', Validators.required],
+            login: ['', Validators.required, Validators.min(6), Validators.max(50)],
             email: ['',Validators.required],
-            pass: ['', Validators.required],
+            pass: ['', Validators.required, Validators.min(6), Validators.max(50)],
             repeatPass: ['', Validators.required]
         });
 
@@ -43,7 +42,7 @@ export class RegisterComponent implements OnInit {
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
-    onSubmit() {
+    async onSubmit() {
         this.submitted = true;
 
         // reset alerts on submit
@@ -60,22 +59,21 @@ export class RegisterComponent implements OnInit {
 
         let user = {
             id: 0,
-            name: this.f['name'].value,
+            login: this.f['login'].value,
             email: this.f['email'].value,
-            pass: this.f['pass'].value
+            password: this.f['pass'].value,
+            confirmPassword: this.f['pass'].value
         };
         this.loading = true;
-        this.sessionService.register(user)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['/account/login'], { relativeTo: this.route });
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
+        let response = await firstValueFrom(this.sessionService.register(user))
+        console.log(response);
+        if (response && response['success']){
+            this.alertService.success('Регистрация прошла успешно', { keepAfterRouteChange: true });
+            this.router.navigate(['/account/login'], { relativeTo: this.route });
+        }
+        else {
+            this.alertService.error('Произошла ошибка при регистрации', { keepAfterRouteChange: false });
+            this.loading = false;
+        }
     }
-
 }

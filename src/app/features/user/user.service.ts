@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from './user.interface';
@@ -10,15 +10,19 @@ import { User } from './user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-
+    public api = 'http://26.36.84.33:5163/api/';
     private userUrl = 'api/user';  // URL to web api
+    private userSubject: BehaviorSubject<User>;
 
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
     constructor(
-        private http: HttpClient) { }
+        private http: HttpClient) {
+        //@ts-ignore
+        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+    }
 
     /** GET users from the server */
     getUsers(): Observable<User[]> {
@@ -27,6 +31,28 @@ export class UserService {
                 tap(_ => UserService.log('fetched users')),
                 catchError(this.handleError<User[]>('getUsers', []))
             );
+    }
+
+    public getUser(): User {
+        return this.userSubject.value;
+    }
+
+    loadUser() {
+        return this.http.get<any>(`${this.api}User/get`)
+            .pipe(
+                tap((user) => {
+                    localStorage.setItem('user', JSON.stringify(user.data));
+                    this.userSubject.next(user.data);
+                    return user;
+                }),
+                catchError(this.handleError<any>('loadUser'))
+            );
+    }
+
+    logout(){
+        localStorage.removeItem('user');
+        //@ts-ignore
+        this.userSubject.next(null);
     }
 
     /** GET user by id. Return `undefined` when id not found */

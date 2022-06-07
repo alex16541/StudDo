@@ -5,8 +5,8 @@
             <img class="login__logo" src="/assets/img/logo-w-lg.png" alt="Logo">
 
             <h3 class="login__input-title">Login:</h3>
-            <input class="login__input input-text" type='text' name="loginNameInput" formControlName="username"
-                   [ngClass]="{ 'input-text_is-invalid': submitted && f['username'].errors }">
+            <input class="reg__input input-text" type='email' formControlName="email" email
+                   [ngClass]="{ 'input-text_is-invalid': submitted && f['email'].errors }" >
 
             <h3 class="login__input-title">Password:</h3>
             <input class="login__input input-text" type="password" name="loginPassInput" formControlName="password"

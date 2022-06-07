@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import { first } from 'rxjs';
+import {first, firstValueFrom} from 'rxjs';
 import { AlertService } from 'src/app/shared/alert/alert.service';
 import {SessionService} from "../../../../features/session";
+import {UserService} from "../../../../features/user";
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,12 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private sessionService: SessionService,
+        private userService: UserService,
         private alertService: AlertService)
     {
 
         this.form = this.formBuilder.group({
-            username: ['', Validators.required],
+            email: ['',Validators.required],
             password: ['', Validators.required]
         });
 
@@ -52,10 +54,11 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.sessionService.login(this.f['username'].value, this.f['password'].value)
+        this.sessionService.login(this.f['email'].value, this.f['password'].value)
             .pipe(first())
             .subscribe(
-                data => {
+                async data => {
+                    await firstValueFrom(this.userService.loadUser());
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
@@ -64,12 +67,7 @@ export class LoginComponent implements OnInit {
                 });
     }
 
-    setTestUsers() {
-        let users = [{id: 11, name: 'Алексей', pass: '123'}, {id: 12, name: '001', pass: '001'}];
-        localStorage.setItem('users', JSON.stringify(users));
-    }
-
     forgotPassword() {
-        this.alertService.warn('Лох! Пхахаха 🤣');
+
     }
 }

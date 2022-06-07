@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
 import { HomeComponent } from './routes/home/home.component';
 import { AccountComponent } from "./routes/account/account.component";
 import { HomeModule } from "./routes/home/home.module";
@@ -24,7 +22,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false , delay: 0 }),
         HomeModule,
         AccountModule,
         SharedModule,

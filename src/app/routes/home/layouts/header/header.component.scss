@@ -20,7 +20,7 @@
     &__logo {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         padding: 10px;
 
         & a{
@@ -81,7 +81,7 @@
             pointer-events: all;
             display: flex;
             align-items: center;
-            justify-content: end;
+            justify-content: flex-end;
             padding-right: 5px;
 
         }
@@ -94,7 +94,7 @@
         }
 
         &__logo {
-            justify-content: start;
+            justify-content: flex-start;
 
             & a{
 
@@ -113,7 +113,7 @@
 
         }
         &__login {
-            justify-content: end;
+            justify-content: flex-end;
 
         }
 
