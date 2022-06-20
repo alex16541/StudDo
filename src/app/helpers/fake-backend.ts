@@ -3,7 +3,7 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-// let users = JSON.parse(localStorage.getItem('users') || JSON.stringify([{id:11,name: 'alex', pass: '123'}])) ;
+// let users = JSON.parse(localStorage.getItem('users') || JSON.stringify([{id:11,name: 'alex', password: '123'}])) ;
 //@ts-ignore
 let users = JSON.parse(localStorage.getItem('users')) || [] ;
 
@@ -16,7 +16,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
-            .pipe(delay(500))
+            .pipe(delay(50))
             .pipe(dematerialize());
 
         function handleRoute() {
@@ -34,7 +34,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.match(/\/account\/\d+$/) && method === 'DELETE':
                     return deleteUser();
                 default:
-                    // pass through any requests not handled above
+                    // password through any requests not handled above
                     return next.handle(request);
             }
         }
@@ -42,12 +42,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // route functions
 
         function login() {
-            const { name, pass } = body;
-            const user = users.find((x: { name: string; pass: string; }) => x.name === name && x.pass === pass);
-            if (!user) return error('Username or password is incorrect');
+            const { name, password } = body;
+            const user = users.find((x: { name: string; password: string; }) => x.name === name && x.password === password);
+            if (!user) return error('Логин или пароль не корректны');
             return ok({
                 id: user.id,
                 name: user.name,
+                email: user.email,
                 token: 'fake-jwt-token'
             });
         }
@@ -56,7 +57,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = body
 
             if (users.find((x: { name: any; }) => x.name === user.name)) {
-                return error('Username "' + user.name + '" is already taken')
+                return error('Логин "' + user.name + '" уже занят')
             }
 
             user.id = users.length ? Math.max(...users.map((x: { id: any; }) => x.id)) + 1 : 1;
@@ -105,7 +106,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // helper functions
 
-        function ok(body?: { id: number; name: string; token: string; } | undefined) {
+        function ok(body?: { id: number; name: string; email: string; token: string; } | undefined) {
             return of(new HttpResponse({ status: 200, body }))
         }
 

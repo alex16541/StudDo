@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {CalendarConstructorComponent} from "./calendar-constructor/calendar-constructor.component";
+import {CalendarConstructorComponent} from "../../../../../../components/constructors/calendar-constructor/calendar-constructor.component";
 import {Calendar, CalendarService} from "../../../../../../features/calendar";
 import {firstValueFrom, Observable} from "rxjs";
-import {ModalQuestionComponent} from "../../../../../../shared/modal-question/modal-question.component";
+import {ModalQuestionComponent} from "../../../../../../components/modal/modal-question/modal-question.component";
+import {SessionService} from "../../../../../../features/session";
 
 
 @Component({
@@ -14,12 +15,13 @@ import {ModalQuestionComponent} from "../../../../../../shared/modal-question/mo
     styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
-    title = 'Календари';
+    title = 'Расписания';
     allChecked = false;
     fetchedCalendars?: Observable<Calendar[]>;
     calendars?: Calendar[];
-    calendarsCount: number | null = null;
+    calendarsCount = 0;
     isLoading: boolean = true;
+    user = this.sessionService.getSession();
 
 
     constructor(
@@ -27,6 +29,7 @@ export class FilterComponent implements OnInit {
         private router: Router,
         public dialog: MatDialog,
         public calendarService: CalendarService,
+        private sessionService: SessionService,
     ) {
         this.getCalendars();
     }
@@ -41,12 +44,23 @@ export class FilterComponent implements OnInit {
     getCalendars(){
         this.isLoading = true;
         this.calendarService.getCalendars().subscribe(calendars => {
-            this.calendars = calendars;
-            this.calendarsCount = calendars.length;
+            calendars = calendars.filter(c => c.users.find(uId => uId == this.user.id))
+            if (calendars.length > 0){
+                this.calendars = calendars.sort((a,b)=>this.sort(a,b));
+                this.calendarsCount = calendars.length;
+            }
             this.isLoading = false;
         });
         this.fetchedCalendars = this.calendarService.getCalendars();
     }
+
+    sort(a:Calendar, b:Calendar):number {
+        if(a.name && b.name) {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+        }
+        return 0;
+    };
 
     createCalendar() {
         const createDialogRef = this.dialog.open(CalendarConstructorComponent);
@@ -54,14 +68,9 @@ export class FilterComponent implements OnInit {
         createDialogRef.afterClosed().subscribe(result => {
             if(result && this.calendars){
                 this.isLoading = true;
+                result.mainCalendarVisible = true
                 firstValueFrom(
-                    this.calendarService.addCalendar({
-                        id: 0,
-                        name: result.name,
-                        color: result.color, description: result.description,
-                        mainCalendarVisible: true,
-                        events: result.events
-                    })
+                    this.calendarService.addCalendar(result)
                 ).then(_ => this.getCalendars())
             }
         })
@@ -83,8 +92,8 @@ export class FilterComponent implements OnInit {
     deleteCalendar(calendar: Calendar) {
         const deleteDialogRef = this.dialog.open(ModalQuestionComponent, {
             data: {
-                question: `Удалить календарь "${calendar.name}"?`,
-                yes: 'Да, удалить календарь',
+                question: `Удалить расписание "${calendar.name}"?`,
+                yes: 'Да, удалить расписание',
                 no: 'Нет, не удалять'
             }
         });
@@ -97,8 +106,9 @@ export class FilterComponent implements OnInit {
         })
     }
 
-    updateAllComplete() {
+    updateAllComplete(calendar: Calendar) {
         this.allChecked = this.calendars != null && this.calendars.every(t => t.mainCalendarVisible);
+        this.changeCalendarVisibility(calendar);
     }
 
     someComplete(): boolean {
@@ -113,6 +123,13 @@ export class FilterComponent implements OnInit {
         if (this.calendars == null) {
             return;
         }
-        this.calendars.forEach(t => (t.mainCalendarVisible = completed));
+        this.calendars.forEach(t => {
+            t.mainCalendarVisible = completed;
+            this.changeCalendarVisibility(t);
+        });
+    }
+
+    changeCalendarVisibility(calendar: Calendar) {
+        this.calendarService.updateCalendar(calendar).subscribe();
     }
 }

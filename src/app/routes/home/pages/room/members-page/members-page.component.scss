@@ -1,0 +1,51 @@
+@use 'src/scss/shared/colorStyle' as *;
+.member{
+    overflow-y: auto;
+    overflow-x: hidden;
+    &__list{
+        width: 70vw;
+
+    }
+    &__item{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+
+    }
+    &__left{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        overflow: hidden;
+    }
+    &__name{
+        letter-spacing: 1px;
+        font-size: 1.4rem;
+    }
+    &__email{
+        font-size: 1.2rem;
+    }
+
+    /* SCROLLBAR */
+    /* Let get this party started */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+
+        background: #22222244;
+        border: 4px solid transparent;
+        border-radius: 3px;
+        //background-clip: content-box;   /* THIS IS IMPORTANT */
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: $sidebarScrollColor;
+    }
+}

@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {Calendar} from "../../../../../../../features/calendar";
+import {Calendar} from "../../../features/calendar";
+import {SessionService} from "../../../features/session";
 
 
 @Component({
@@ -10,22 +11,23 @@ import {Calendar} from "../../../../../../../features/calendar";
   styleUrls: ['./calendar-constructor.component.scss']
 })
 export class CalendarConstructorComponent implements OnInit {
-    title = 'Создание нового календаря';
+    title = 'Создание нового расписания';
     calendar: Calendar;
     form: FormGroup;
     loading = false;
     constructor(
         public dialogRef: MatDialogRef<CalendarConstructorComponent>,
         private formBuilder: FormBuilder,
+        private sessionService: SessionService,
         @Inject(MAT_DIALOG_DATA) public data?: { calendar?: Calendar},
 
     ) {
-        this.calendar = {id: 0, name: '', description: '', color: '', mainCalendarVisible: true, events: []};
+        this.calendar = {id: null, name: '', description: '', color: '', mainCalendarVisible: true, events: [], users: [], creatorId: this.sessionService.getSession().id};
 
         if (data?.calendar)
         {
             this.calendar = data.calendar;
-            this.title = 'Редактирование календаря';
+            this.title = 'Редактирование расписания';
         }
 
         this.form = this.formBuilder.group({

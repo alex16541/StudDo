@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import {Alert, AlertType} from 'src/app/models';
 import { AlertService } from './alert.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({ selector: 'app-alert',
     templateUrl: 'alert.component.html',
@@ -16,7 +17,9 @@ export class AlertComponent implements OnInit, OnDestroy {
     alertSubscription: Subscription;
     routeSubscription: Subscription;
 
-    constructor(private router: Router, private alertService: AlertService) {
+    constructor(private router: Router,
+                private snackBar: MatSnackBar,
+                private alertService: AlertService) {
 
         // subscribe to new alert notifications
         this.alertSubscription = this.alertService.onAlert(this.id)
@@ -34,13 +37,15 @@ export class AlertComponent implements OnInit, OnDestroy {
                     return;
                 }
 
+                this.createAlert(alert.message, 'Закрыть')
+
                 // add alert to array
-                this.alerts.push(alert);
+                // this.alerts.push(alert);
 
                 // auto close alert if required
-                if (alert.autoClose) {
-                    setTimeout(() => this.removeAlert(alert), 3000);
-                }
+                // if (alert.autoClose) {
+                //     setTimeout(() => this.removeAlert(alert), 3000);
+                // }
             });
 
         // clear alerts on location change
@@ -99,5 +104,13 @@ export class AlertComponent implements OnInit, OnDestroy {
         }
 
         return classes.join(' ');
+    }
+
+    createAlert(message: string, action: string){
+        this.snackBar.open(message, action, {
+            duration: 5000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+        });
     }
 }

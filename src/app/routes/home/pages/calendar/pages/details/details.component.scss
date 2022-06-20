@@ -44,12 +44,22 @@
         gap: 20px;
     }
     &__calendar-name{
-        font-size: 1.2rem;
+        font-size: 1.8rem;
+        font-weight: bold;
     }
     &__item{
+        display: flex;
+        flex-direction: row;
         padding: 10px;
+        min-height: 75px;
+        font-size: 1.4rem;
         gap: 50px;
         cursor:pointer;
+
+    }
+    &__time{
+        font-size: 1rem;
+        font-weight: lighter;
     }
     &__banner{
         height: 100%;
@@ -65,5 +75,25 @@
     &__banner-text{
         font-size: 2rem;
         text-align: center;
+    }
+
+    @media (max-width: 425px){
+        &__calendar-name{
+            font-size: 1.7rem;
+        }
+        &__item{
+            font-size: 1.5rem;
+            gap: 40px;
+            flex-direction: column;
+        }
+        &__text{
+            width: 100%;
+            text-align: start;
+        }
+        &__time{
+            font-size: 1.3rem;
+            width: 100%;
+            text-align: end;
+        }
     }
 }

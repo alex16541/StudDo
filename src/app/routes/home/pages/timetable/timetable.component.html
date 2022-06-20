@@ -1,20 +1,60 @@
-<swiper
-    class="swiper-custom-drag"
-    [config]="config"
->
-    <ng-template swiperSlide *ngFor="let day of days; let index = index">
-        <div class="timetable__card card">
-
-            <div class="timetable__title">{{day.day}}</div>
-
-            <swiper [config]="day_config" class="timetable__item-list">
-                <ng-template swiperSlide *ngFor="let item of day.items; let i = index">
-                    <div class="timetable__item">
-                        {{i+1}}. {{item}}
-                    </div>
-                </ng-template>
-            </swiper>
+<div class="timetable" *ngIf="!isLoading; else loading">
+    <div class="timetable__header card">
+        <select
+            id='calendarId'
+            class="timetable__input input-text"
+            (change)="changeCalendar($event)"
+        >
+            <option *ngIf="calendarsList.length == 0">Расписаний нет</option>
+            <option *ngFor="let calendar of calendarsList; let index = index" [selected]="index == 0" [value]="calendar.id">{{calendar.name}}</option>
+        </select>
+        <div class="timetable__btn" (click)="router.navigate(['/home/timetable/filter'])"
+             matTooltip="Ваши расписания"
+             [matTooltipPosition]="'above'">
+            <svg class=" btn btn_icon" width="30" height="30" viewBox="0 0 33 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M31.9688 22.7857H10.3125V21.75C10.3125 21.1804 9.84844 20.7143 9.28125 20.7143H7.21875C6.65156 20.7143 6.1875 21.1804 6.1875 21.75V22.7857H1.03125C0.464062 22.7857 0 23.2518 0 23.8214V25.8929C0 26.4625 0.464062 26.9286 1.03125 26.9286H6.1875V27.9643C6.1875 28.5339 6.65156 29 7.21875 29H9.28125C9.84844 29 10.3125 28.5339 10.3125 27.9643V26.9286H31.9688C32.5359 26.9286 33 26.4625 33 25.8929V23.8214C33 23.2518 32.5359 22.7857 31.9688 22.7857ZM31.9688 12.4286H26.8125V11.3929C26.8125 10.8232 26.3484 10.3571 25.7812 10.3571H23.7188C23.1516 10.3571 22.6875 10.8232 22.6875 11.3929V12.4286H1.03125C0.464062 12.4286 0 12.8946 0 13.4643V15.5357C0 16.1054 0.464062 16.5714 1.03125 16.5714H22.6875V17.6071C22.6875 18.1768 23.1516 18.6429 23.7188 18.6429H25.7812C26.3484 18.6429 26.8125 18.1768 26.8125 17.6071V16.5714H31.9688C32.5359 16.5714 33 16.1054 33 15.5357V13.4643C33 12.8946 32.5359 12.4286 31.9688 12.4286ZM31.9688 2.07143H18.5625V1.03571C18.5625 0.466071 18.0984 0 17.5312 0H15.4688C14.9016 0 14.4375 0.466071 14.4375 1.03571V2.07143H1.03125C0.464062 2.07143 0 2.5375 0 3.10714V5.17857C0 5.74821 0.464062 6.21429 1.03125 6.21429H14.4375V7.25C14.4375 7.81964 14.9016 8.28571 15.4688 8.28571H17.5312C18.0984 8.28571 18.5625 7.81964 18.5625 7.25V6.21429H31.9688C32.5359 6.21429 33 5.74821 33 5.17857V3.10714C33 2.5375 32.5359 2.07143 31.9688 2.07143Z" fill="white"/>
+            </svg>
         </div>
-    </ng-template>
+    </div>
 
-</swiper>
+    <swiper
+        class="swiper-custom-drag"
+        [config]="config"
+        *ngIf="days.length > 0; else noTimetablesBanner"
+    >
+        <ng-template swiperSlide *ngFor="let day of days; let index = index">
+            <div class="timetable__card card">
+                <div class="timetable__card-header">
+                    <div class="timetable__title">{{day.fullDate}} | {{day.dayOfWeek}}</div>
+                    <button mat-icon-button matTooltip="Создать событие"
+                            *ngIf="this.calendar.creatorId == this.user.id"
+                            [matTooltipPosition]="'above'" (click)="createEvent(day.fullDate)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+
+                <swiper [config]="day_config" class="timetable__item-list" *ngIf="day.events.length > 0; else noEventsBanner">
+                    <ng-template swiperSlide *ngFor="let event of day.events; let i = index">
+                        <div class="timetable__item">
+                            {{i+1}}. {{event.title}}
+                        </div>
+                    </ng-template>
+
+                </swiper>
+                <ng-template #noEventsBanner >
+                    <div class="banner">Событий нет</div>
+                </ng-template>
+
+            </div>
+        </ng-template>
+
+    </swiper>
+    <ng-template #noTimetablesBanner>
+        <div class="banner">Расписаний нет</div>
+    </ng-template>
+</div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>

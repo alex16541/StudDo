@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Room } from './room.interface';
+import {IRoomCalendar, IRoomUser, Room} from './room.interface';
+import {User} from "../user";
 
 
 
@@ -28,6 +29,61 @@ export class RoomService {
                 catchError(this.handleError<Room[]>('getRooms', []))
             );
     }
+
+    users(): Observable<IRoomUser[]> {
+        return this.http.get<IRoomUser[]>('api/roomUsers')
+            .pipe(
+                tap(_ => RoomService.log('fetched room users')),
+                catchError(this.handleError<IRoomUser[]>('users', []))
+            );
+    }
+
+    addUser(user: IRoomUser) {
+        return this.http.post<IRoomUser[]>('api/roomUsers', user, this.httpOptions)
+            .pipe(
+                tap(_ => RoomService.log('added room users')),
+                catchError(this.handleError<IRoomUser[]>('addUser', []))
+            );
+    }
+
+    deleteUser(user: IRoomUser) {
+        return this.http.delete<IRoomUser[]>('api/roomUsers/'+user.id, this.httpOptions)
+            .pipe(
+                tap(_ => RoomService.log('deleted room users')),
+                catchError(this.handleError<IRoomUser[]>('addUser', []))
+            );
+    }
+    updateUser(roomUser: IRoomUser): Observable<any> {
+        return this.http.put('api/roomUsers/', roomUser, this.httpOptions).pipe(
+            tap(_ => RoomService.log(`updated room user id=${roomUser.id}`)),
+            catchError(this.handleError<any>('updateUser'))
+        );
+    }
+
+    getCalendars(): Observable<IRoomCalendar[]> {
+        return this.http.get<IRoomCalendar[]>('api/roomCalendar')
+            .pipe(
+                tap(_ => RoomService.log('fetched room calendar list')),
+                catchError(this.handleError<IRoomCalendar[]>('getCalendars', []))
+            );
+    }
+
+    initCalendar(roomCalendar: IRoomCalendar) {
+        return this.http.post<IRoomCalendar[]>('api/roomCalendar', roomCalendar, this.httpOptions)
+            .pipe(
+                tap(_ => RoomService.log('added calendar to room')),
+                catchError(this.handleError<IRoomCalendar[]>('initCalendar', []))
+            );
+    }
+
+    deleteCalendar(roomCalendar: IRoomCalendar) {
+        return this.http.delete<IRoomCalendar[]>('api/roomCalendar/'+roomCalendar.id, this.httpOptions)
+            .pipe(
+                tap(_ => RoomService.log('deleted calendar room users')),
+                catchError(this.handleError<IRoomCalendar[]>('deleteCalendar', []))
+            );
+    }
+
 
     /** GET room by id. Return `undefined` when id not found */
     getRoomNo404<Data>(id: number): Observable<Room> {
@@ -123,4 +179,5 @@ export class RoomService {
     // private log(message: string) {
     //     this.messageService.add(`HeroService: ${message}`);
     // }
+
 }

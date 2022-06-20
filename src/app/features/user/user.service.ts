@@ -11,7 +11,7 @@ import { User } from './user.interface';
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-    private userUrl = 'api/user';  // URL to web api
+    private userUrl = 'api/users';  // URL to web api
 
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })

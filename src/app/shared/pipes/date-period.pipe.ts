@@ -8,6 +8,7 @@ import * as moment from "moment";
 export class DatePeriodPipe implements PipeTransform {
     transform(e: CalendarEvent, date?: moment.Moment): string {
         if(date){
+            let d = date;
 
             if (e.start && e.end){
 
@@ -18,10 +19,16 @@ export class DatePeriodPipe implements PipeTransform {
                 }
                 else {
                     let text = '';
-
-                    if(date.date() > start.date() && date.date() < end.date()){
+                    let nowStart = d.set('hours', 0).set('minutes', 0);
+                    let nowEnd = d.set('hours', 23).set('minutes', 59);
+                    if(nowStart.valueOf() >= start.valueOf() && nowEnd.valueOf() <= end.valueOf()){
                         text = 'Весь день'
-                    }else {
+                    }
+                    else if((start.format('DD-MM-YYYY') == end.format('DD-MM-YYYY')) && (d.format('DD-MM-YYYY') == end.format('DD-MM-YYYY'))){
+                        text = `С ${start.format('hh:mm')} / `
+                        text += `До ${end.format('hh:mm')}`
+                    }
+                    else {
                         text = `С ${start.format('DD MMMM hh:mm')} / `
                         text += `До ${end.format('DD MMMM hh:mm')}`
                     }

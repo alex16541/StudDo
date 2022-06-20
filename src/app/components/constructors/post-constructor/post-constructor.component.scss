@@ -1,0 +1,15 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.description{
+    max-width: 745px;
+}
+.color{
+    height: 40px;
+}
+.textarea{
+    min-width: 30vw;
+    min-height: 30vh;
+}

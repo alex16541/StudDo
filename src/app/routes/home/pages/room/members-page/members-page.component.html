@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Список участников</h2>
+<mat-dialog-content class="mat-typography member">
+    <div class="member__list" *ngIf="!isLoading && member; else loading">
+        <div *ngFor="let user of users">
+            <div class="member__item card" style="margin: 10px;">
+                <div class="member__left">
+                    <div class="member__name">
+                        <b>{{user.user.name}}</b> - {{roles[user.roomUser.role]}}
+                    </div>
+                    <div class="member__email">
+                        {{user.user.email}}
+                    </div>
+                </div>
+                <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="user.roomUser.role != 2 && member.roomUser.role == 2">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="makeMember(user)" *ngIf="user.roomUser.role == 1">
+                        <span>Забрать роль редактора</span>
+                    </button>
+                    <button mat-menu-item (click)="makeEditor(user)" *ngIf="user.roomUser.role == 0">
+                        <span>Сделать редактором</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="deleteMember(user)">
+                        <mat-icon [color]="'warn'">logout</mat-icon>
+                        <span>Исключить</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial mat-dialog-close>Закрыть</button>
+</mat-dialog-actions>
+

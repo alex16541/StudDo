@@ -4,20 +4,18 @@
         <form  class="login card" [formGroup]="form" (ngSubmit)="onSubmit()">
             <img class="login__logo" src="/assets/img/logo-w-lg.png" alt="Logo">
 
-            <h3 class="login__input-title">Login:</h3>
+            <h3 class="login__input-title">Логин:</h3>
             <input class="login__input input-text" type='text' name="loginNameInput" formControlName="username"
                    [ngClass]="{ 'input-text_is-invalid': submitted && f['username'].errors }">
 
-            <h3 class="login__input-title">Password:</h3>
+            <h3 class="login__input-title">Пароль:</h3>
             <input class="login__input input-text" type="password" name="loginPassInput" formControlName="password"
                    [ngClass]="{ 'input-text_is-invalid': submitted && f['password'].errors }">
 
             <div class="login__footer">
-                <input class="login__submit input-button" type="submit" value="Go!">
+                <input class="login__submit input-button" type="submit" value="Авторизоваться">
                 <a class="login__link" routerLink="/account/register">Регистрация</a>
             </div>
-
-            <input class="input-button" type="button" value="Забыл пароль" (click)="forgotPassword()">
         </form>
     </div>
 </ng-template>

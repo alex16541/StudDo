@@ -94,18 +94,26 @@
     }
 
     .content {
-        //user-select: none;
-        background-color: #555;
         border-radius: 5px;
         grid-area: content;
         max-height: 100%;
-        overflow: hidden;
-        //display: grid;
-        //grid-template: 1fr/1fr;
+        overflow-x: hidden;
+        overflow-y: auto;
         padding: 20px;
 
-        //TODO: ng-template
         router-outlet{
+        }
+    }
+
+    &.light-theme{
+        .content {
+            background-color: $contentColorLight;
+        }
+    }
+
+    &.dark-theme{
+        .content {
+            background-color: $contentColor;
         }
     }
 
@@ -132,6 +140,28 @@ app-navbar{
         position: absolute;
         pointer-events: none;
     }
+}
+
+
+/* SCROLLBAR */
+/* Let get this party started */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+
+    background: #22222244;
+    border: 4px solid transparent;
+    border-radius: 3px;
+    //background-clip: content-box;   /* THIS IS IMPORTANT */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: $sidebarScrollColor;
 }
 
 /* ------------------------------------------- */

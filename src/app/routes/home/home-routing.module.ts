@@ -7,7 +7,7 @@ import {RoomComponent} from "./pages/room/room.component";
 import {HomeComponent} from "./home.component";
 import {DetailsComponent} from "./pages/calendar/pages/details/details.component";
 import {FilterComponent} from "./pages/calendar/pages/filter/filter.component";
-import {CalendarConstructorComponent} from "./pages/calendar/pages/filter/calendar-constructor/calendar-constructor.component";
+import {CalendarConstructorComponent} from "../../components/constructors/calendar-constructor/calendar-constructor.component";
 
 
 
@@ -15,10 +15,10 @@ const routes: Routes = [
     {
         path: '', component: HomeComponent,
         children: [
-            { path: '', redirectTo: '/home/timetable', pathMatch: 'full'},
+            { path: '', component: TimetableComponent},
             { path: 'timetable', component: TimetableComponent },
             { path: 'calendar', component: CalendarComponent },
-            { path: 'calendar/filter', component: FilterComponent },
+            { path: 'timetable/filter', component: FilterComponent },
             { path: 'calendar/calendar-event-constructor/:id', component: CalendarConstructorComponent },
             { path: 'calendar/:year/:month/:day', component: DetailsComponent },
             { path: 'calendar/:year/:month', component: CalendarComponent },

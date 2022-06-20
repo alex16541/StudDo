@@ -1,0 +1,154 @@
+@use '~src/scss/shared/colorStyle' as *;
+.room {
+
+    max-width: 1200px;
+    display: grid;
+    grid-template-areas: 'header header header' 'feed feed toolbar';
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+
+    &__title {
+        max-height: 90px;
+        overflow: hidden;
+
+        grid-area: header;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    &__feed {
+        grid-area: feed;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        &-banner{
+            font-size: 30px;
+            width: 100%;
+            align-items: center;
+            height: min-content
+        }
+    }
+
+    &__post {
+        background-color: $backgroundColor;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: justify;
+        &-rade{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    &__toolbar {
+        grid-area: toolbar;
+        height: min-content;
+        position: sticky;
+        top: 0;
+    }
+    &__timetable{}
+
+    &__shortcuts{
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    @media (max-width: 900px){
+        grid-template-areas: 'header' 'toolbar' 'feed';
+        grid-template-columns: 1fr;
+        &__toolbar {
+            position: static;
+        }
+    }
+
+    @media (max-width: 400px){
+        &__title {
+            font-size: 25px;
+
+            &.card{
+                padding: 10px;
+            }
+        }
+    }
+}
+
+.toolbar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    &__item{
+        display: flex;
+        flex-direction: column;
+    }
+    &__link {
+        border-bottom: 2px solid;
+        padding: 2px;
+        color: white;
+    }
+    &__links{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    &__subtitle {
+        padding: 0 5px 10px 15px;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.timetable{
+
+    &__body{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__item-list{
+        height: calc(100% - 40px);
+        padding: 0 10px;
+    }
+    &__item{
+        background-color: $contentColor;
+        border-radius: 15px;
+        padding: 1.3rem;
+        font-size: 1.1rem;
+        text-align: justify;
+        width: 100%;
+    }
+
+    overflow: hidden;
+}
+
+.light-theme{
+    .timetable__item{
+        background-color: $contentColorLight;
+    }
+}
+
+.banner{
+    width: 100%;
+    height: calc(100% - 50px);
+    font-size: 2.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+}

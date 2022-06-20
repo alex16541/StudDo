@@ -1,6 +1,115 @@
-<div *ngIf="room; else loading" class="card" style="margin: 0 auto">
-    <h3>{{room.name}}</h3>
-    <p>{{room.description}}</p>
+<div class="room" *ngIf="!isLoading && room && member; else loading"  style="margin: 0 auto">
+    <div class="room__title card">
+        <h2>{{room.name}}</h2>
+
+        <div class="room__shortcuts">
+            <button mat-icon-button
+                    matTooltip="Список участников" (click)="showMembers()">
+                <mat-icon>group</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="member.roomUser.role != 0"
+                    matTooltip="Создать новый пост" (click)="createPost()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item >
+                    <mat-icon>bookmark</mat-icon>
+                    <span>Добавить в избранное</span>
+                </button>
+                <button mat-menu-item *ngIf="member.roomUser.role == 2" (click)="inviteUser()">
+                    <mat-icon>person_add</mat-icon>
+                    <span>Пригласить участника</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="leaveTheRoom(room)" *ngIf="member.roomUser.role != 2">
+                    <mat-icon [color]="'warn'">logout</mat-icon>
+                    <span>Покинуть комнату</span>
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <div class="room__feed" *ngIf="posts.length > 0; else noPostsBanner">
+        <mat-card class="room__post" *ngFor="let post of posts; let index = index">
+            <mat-card-title-group>
+                <mat-card-title>{{post.title}}</mat-card-title>
+                <mat-card-subtitle>{{post.created}}</mat-card-subtitle><mat-card-subtitle></mat-card-subtitle>
+                <button mat-icon-button [matMenuTriggerFor]="postMenu" *ngIf="member.roomUser.role != 0">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #postMenu="matMenu">
+                    <button mat-menu-item >
+                        <mat-icon>edit</mat-icon>
+                        <span>Редактировать пост</span>
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="deletePost(post)">
+                        <mat-icon [color]="'warn'">delete</mat-icon>
+                        <span>Удалить пост</span>
+                    </button>
+                </mat-menu>
+            </mat-card-title-group>
+
+            <mat-card-content>
+                <p>{{post.body | titlecase}}</p>
+            </mat-card-content>
+            <mat-card-actions >
+                <div class="room__post-rade">
+                    <button *ngIf="post | isPostRead : readPosts" mat-raised-button [color]="('primary')"
+                            matTooltip="Пост прочитан"
+                            (click)="unreadThePost(post)"
+                    >Прочитано</button>
+                    <button *ngIf="!(post | isPostRead : readPosts)" mat-raised-button
+                            matTooltip="Отметить пост как прочитанный"
+                            (click)="readThePost(post)"
+                    >Прочитать</button>
+                    <div style="font-size: 0.8rem;">Отметок "Прочитано": {{post | getReadsOfPost : readPosts}}</div>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    <ng-template #noPostsBanner>
+        <section class="room__feed room__feed-banner card">
+            <p>Постов пока нету</p>
+            <button mat-raised-button (click)="createPost()" *ngIf="member.roomUser.role != 0">Создать пост</button>
+        </section>
+    </ng-template>
+
+    <div class="room__toolbar toolbar card">
+<!--        <div class="toolbar__time">-->
+<!--            <label class="toolbar__subtitle">Полезные ссылки</label>-->
+<!--            <div class="toolbar__links">-->
+<!--                <a href="" class="toolbar__link">Расписание</a>-->
+<!--                <a href="" class="toolbar__link">Календарь событий</a>-->
+<!--                <a href="" class="toolbar__link">Файлы</a>-->
+<!--                <a href="" class="toolbar__link">Участники комнаты</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="toolbar__item">
+            <div class="toolbar__subtitle">
+                <span>Расписание на сегодня</span>
+                <button mat-icon-button matTooltip="Создать событие" *ngIf="member.roomUser.role == 2" [matTooltipPosition]="'above'" (click)="createEvent()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+
+            <div class="room__timetable timetable">
+                <div class="timetable__body" *ngIf="todayEvents.length > 0; else noEventsBanner">
+                    <div class="timetable__item" *ngFor="let event of todayEvents; let i = index">
+                        {{i+1}}. {{event.title}}
+                    </div>
+                </div>
+
+                <ng-template #noEventsBanner >
+                    <div class="banner">Событий нет</div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
 </div>
 <ng-template #loading>
     <app-loading></app-loading>

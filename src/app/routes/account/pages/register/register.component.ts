@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
             id: 0,
             name: this.f['name'].value,
             email: this.f['email'].value,
-            pass: this.f['pass'].value
+            password: this.f['pass'].value
         };
         this.loading = true;
         this.sessionService.register(user)

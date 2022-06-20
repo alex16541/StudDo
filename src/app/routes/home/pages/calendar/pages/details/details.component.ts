@@ -4,10 +4,12 @@ import {Location} from "@angular/common";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {filter, firstValueFrom, Subscription} from "rxjs";
 import {Calendar, CalendarService} from "../../../../../../features/calendar";
-import {CalendarConstructorComponent} from "../filter/calendar-constructor/calendar-constructor.component";
+import {CalendarConstructorComponent} from "../../../../../../components/constructors/calendar-constructor/calendar-constructor.component";
 import {MatDialog} from "@angular/material/dialog";
-import {EventConstructorComponent} from "./event-constructor/event-constructor.component";
+import {EventConstructorComponent} from "../../../../../../components/constructors/event-constructor/event-constructor.component";
 import {CalendarEvent} from "../../../../../../features/calendar/event.interface";
+import {logos} from "@igniteui/material-icons-extended";
+import {SessionService} from "../../../../../../features/session";
 
 @Component({
     selector: 'app-details',
@@ -21,6 +23,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     allCalendars: Calendar[] = [];
     routerEventSubscription: Subscription;
     isLoading: boolean;
+    user = this.sessionService.getSession();
+
 
 
     constructor(
@@ -28,8 +32,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private calendarService: CalendarService,
+        private sessionService: SessionService,
         public dialog: MatDialog,
-
     ) {
         this.isLoading = true;
         this.date = moment();
@@ -52,37 +56,46 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
 
     async loadData(){
-        let data = await this.calendarService.getCalendarsWithEvents();
-        this.allCalendars = data;
-        data.map(value => {
+        this.calendarService.getCalendarsWithEvents().then( calendars =>{
+            this.allCalendars = calendars
+            this.filterCalendars();
+        });
+    }
+
+    private filterCalendars() {
+        let data :Calendar[] = [];
+        data = JSON.parse(JSON.stringify(this.allCalendars))
+        data.forEach(value => {
             value.events = value.events.filter( e => this.isEventToday(e) )
         });
-
-        data = data.filter(value => value.events.length > 0);
-
+        data = data.filter(calendar => calendar.mainCalendarVisible);
+        data = data.filter(calendar => calendar.events.length > 0);
+        data = data.filter(calendar => calendar.users.find(uId=>uId == this.user.id))
         this.calendars = data;
     }
 
-    isEventToday(e: CalendarEvent): boolean{
-        let d = moment(this.date, 'DD-MM-YYYY');
-        return (d >= moment(e.start, 'DD-MM-YYYY')
-            && d <= moment(e.end, 'DD-MM-YYYY'));
+    isEventToday(event: CalendarEvent): boolean{
+
+        let d = moment(this.date.format('DD-MM-YYYY'),'DD-MM-YYYY');
+        let s = moment(event.start,'DD-MM-YYYY');
+        let e = moment(event.end,'DD-MM-YYYY');
+        return (d.valueOf() >= moment(s, 'DD-MM-YYYY').valueOf()
+            && d.valueOf() <= moment(e, 'DD-MM-YYYY').valueOf());
     }
 
     createEvent() {
         const createDialogRef = this.dialog.open(EventConstructorComponent,
             {
                 data: {
+                    date: moment(this.date.format('DD-MM-YYYY'),'DD-MM-YYYY'),
                     calendars: this.allCalendars
                 }
             });
 
         createDialogRef.afterClosed().subscribe((result: CalendarEvent) => {
-            if (result && this.calendars) {
+            if (result) {
                 this.isLoading = true;
-                firstValueFrom(this.calendarService.addEvent(result))
-                    .then( _ => this.loadData())
-                    .then( _ => this.isLoading = false);
+                this.loadData().then(_ => this.isLoading = false);
             }
         });
     }
@@ -91,6 +104,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         const createDialogRef = this.dialog.open(EventConstructorComponent,
             {
                 data: {
+                    date: moment(this.date.format('DD-MM-YYYY'),'DD-MM-YYYY'),
                     event: event,
                     calendars: this.allCalendars
                 }
@@ -99,9 +113,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
         createDialogRef.afterClosed().subscribe(result => {
             if (result && this.calendars) {
                 this.isLoading = true;
-                firstValueFrom(this.calendarService.updateEvent(result))
-                    .then( _ => this.loadData())
-                    .then( _ => this.isLoading = false)
+                this.loadData()
+                .then( _ => this.isLoading = false)
             }
         });
     }
@@ -120,5 +133,4 @@ export class DetailsComponent implements OnInit, OnDestroy {
     back() {
         this.location.back();
     }
-
 }

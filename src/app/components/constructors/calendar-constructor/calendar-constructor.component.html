@@ -2,7 +2,7 @@
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form" class="form">
         <label for="calendarName">Название:
-            <mat-error *ngIf="f['name'].hasError('required')">
+            <mat-error *ngIf="f['name'].hasError('required')  && f['name'].touched">
                 <strong>обязательно к заполнению</strong>
             </mat-error>
             <mat-error

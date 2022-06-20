@@ -1,5 +1,24 @@
 export interface Room {
-    id: number;
+    id: any;
     name: string;
-    description: string|null;
+    lastPost: any;
+}
+
+export interface IRoomUser{
+    id: any,
+    roomId: number,
+    userId: number,
+    role: RoomRole
+}
+
+export interface IRoomCalendar{
+    id: any,
+    roomId: number,
+    calendarId: number,
+}
+
+export enum RoomRole{
+    'member',
+    'editor',
+    'admin'
 }

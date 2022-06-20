@@ -8,7 +8,25 @@
     </a></div>
     <div class="header__status">{{date.format('DD MMMM YYYY')}}</div>
     <div class="header__login login">
-        <a href="#" class="login__btn btn btn_text" [innerHTML]="sessionService.getSession().name"></a>
+        <button mat-button class="login__btn " [matMenuTriggerFor]="menu">
+            {{sessionService.getSession().email}}
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="sessionService.switchTheme()">
+                <mat-icon>{{ sessionService.isDarkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+                <span>{{ sessionService.isDarkMode  ? 'Тёмная тема' : 'Светлая тема'}}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="editPassword()">
+                <mat-icon>edit</mat-icon>
+                <span>Сменить пароль</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon [color]="'warn'">logout</mat-icon>
+                <span>Выйти</span>
+            </button>
+        </mat-menu>
     </div>
     <div class="header__menu menu">
         <div (click)="menuClick()" class=" btn btn_icon">

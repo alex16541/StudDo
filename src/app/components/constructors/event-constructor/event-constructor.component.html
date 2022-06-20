@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="form">
+        <label for="title">Название:
+            <mat-error *ngIf="f['title'].hasError('required') && f['title'].touched">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+            <mat-error
+                *ngIf="f['title'].hasError('minlength')
+                && !f['title'].hasError('required')"
+            >
+                минимальная длинна - <strong>2 символа</strong>
+            </mat-error>
+        </label>
+        <input id="title"
+               formControlName="title"
+               class="input-text"
+               type="text"
+               autocomplete="off"
+               minlength="2"
+               maxlength="40"
+        >
+
+        <label for="isAllDay">Длительность:</label>
+        <mat-checkbox #isAllDayCB id="isAllDay"
+                      [color]="'primary'"
+                      (change)="setEventDuration($event)">
+            Весь день
+        </mat-checkbox>
+
+        <label for="start" *ngIf="!isAllDayCB.checked">Начало:
+            <mat-error *ngIf="f['start'].hasError('required') && f['start'].touched">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+        </label>
+        <input  *ngIf="!isAllDayCB.checked"
+                type="time" id='start'
+                formControlName="start"
+                class="input-text" (input)="changeEndTime($event)">
+
+        <label  for="end" *ngIf="!isAllDayCB.checked">Окончание:
+            <mat-error *ngIf="f['end'].hasError('required') && f['end'].touched">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+        </label>
+        <input  *ngIf="!isAllDayCB.checked"
+                type="time" id='end'
+                formControlName="end"
+                class="input-text">
+
+        <label for="calendarId" *ngIf="!data.selectedCalendar">Расписание:
+            <mat-error *ngIf="f['calendarId'].hasError('required')">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+        </label>
+        <select
+            *ngIf="!data.selectedCalendar"
+            id='calendarId'
+            formControlName="calendarId"
+            class="input-text"
+        >
+            <option *ngFor="let calendar of calendars; let index = index" [selected]="index == 1" [value]="calendar.id">{{calendar.name}}</option>
+        </select>
+
+        <button mat-button (click)="createCalendar()" *ngIf="!data.selectedCalendar">Создать новое расписание</button>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial mat-dialog-close>Отмена</button>
+    <button mat-button [disabled]="form.invalid || !form.touched" (click)="onSubmit()">{{data.event ? 'Сохранить' : 'Создать'}}</button>
+</mat-dialog-actions>
+

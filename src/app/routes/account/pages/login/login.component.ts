@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl]).then();
                 },
                 error => {
                     this.alertService.error(error);
@@ -64,12 +64,7 @@ export class LoginComponent implements OnInit {
                 });
     }
 
-    setTestUsers() {
-        let users = [{id: 11, name: 'Алексей', pass: '123'}, {id: 12, name: '001', pass: '001'}];
-        localStorage.setItem('users', JSON.stringify(users));
-    }
-
     forgotPassword() {
-        this.alertService.warn('Лох! Пхахаха 🤣');
+
     }
 }

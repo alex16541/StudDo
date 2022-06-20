@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SessionService} from "./features/session";
 
 
 @Component({
@@ -7,8 +8,12 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
+    constructor(
+        private sessionService: SessionService
+    ) {
+    }
     ngOnInit() {
-
+        this.sessionService.initUsers().subscribe();
     }
 
     title = 'Stud.do';

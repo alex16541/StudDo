@@ -1,7 +1,11 @@
 <div class="wrapper">
     <div class="container">
         <app-header></app-header>
-        <div class="main">
+        <div [ngClass]="{
+            'main': true,
+            'light-theme': !sessionService.isDarkMode,
+            'dark-theme': sessionService.isDarkMode
+            }">
             <app-sidebar [ngClass]="{'isOpen': sidebarService.visibility}">
             </app-sidebar>
             <app-resizebar></app-resizebar>

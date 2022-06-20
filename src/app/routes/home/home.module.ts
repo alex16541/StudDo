@@ -19,6 +19,8 @@ import { FilterComponent } from './pages/calendar/pages/filter/filter.component'
 import { PageTemplateComponent } from './layouts/page-template/page-template.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatInputModule} from "@angular/material/input";
+import { MembersPageComponent } from './pages/room/members-page/members-page.component';
+import { MemberInviteComponent } from './pages/room/member-invite/member-invite.component';
 
 
 
@@ -57,6 +59,8 @@ import {MatInputModule} from "@angular/material/input";
         DetailsComponent,
         FilterComponent,
         PageTemplateComponent,
+        MembersPageComponent,
+        MemberInviteComponent,
     ]
 })
 export class HomeModule { }

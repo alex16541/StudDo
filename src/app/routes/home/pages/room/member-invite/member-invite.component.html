@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Список участников</h2>
+<mat-dialog-content class="mat-typography member">
+    <form [formGroup]="form" class="form" style="max-width: 200px;">
+        <label for="email">Адрес электронной почты:
+            <mat-error *ngIf="f['email'].hasError('required') && f['email'].touched">
+                <strong>обязательно к заполнению</strong>
+            </mat-error>
+        </label>
+        <input matInput
+               id="email"
+               formControlName="email"
+               class="input-text"
+               type="email"
+               autocomplete="off"
+        >
+    </form>
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial mat-dialog-close>Отмена</button>
+    <button mat-button  [disabled]="form.invalid || !form.touched" (click)="onSubmit()">Пригласить</button>
+</mat-dialog-actions>
+

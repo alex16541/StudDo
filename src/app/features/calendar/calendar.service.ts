@@ -47,7 +47,6 @@ export class CalendarService {
         calendars.forEach(calendar => {
             calendar.events = events.filter(e => e.calendarId == calendar.id)
         })
-
         return calendars;
     }
 
@@ -87,7 +86,9 @@ export class CalendarService {
     /** POST: add a new event to the server */
     addEvent(event: CalendarEvent): Observable<CalendarEvent> {
         return this.http.post<CalendarEvent>(this.calendarEventsUrl, event, this.httpOptions).pipe(
-            tap((newEvent: CalendarEvent) => CalendarService.log(`added event w/ id=${newEvent.id}`)),
+            tap((newEvent: CalendarEvent) => {
+                CalendarService.log(`added event w/ id=${newEvent.id}`)
+            }),
             catchError(this.handleError<CalendarEvent>('addCalendarEvent'))
         );
     }
